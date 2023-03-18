@@ -3,3 +3,14 @@ export interface RouteError {
   statusText?: string;
   message?: string;
 }
+
+export interface ContactProps {
+  contact: {
+    first: string;
+    last: string;
+    avatar: string;
+    twitter?: string;
+    notes?: string;
+    favorite: boolean;
+  }
+}
