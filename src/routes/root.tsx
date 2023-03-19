@@ -12,6 +12,12 @@ import {
 import { createContact, getContacts } from "../contacts";
 // @ts-ignore
 
+  // loader as rootLoader,
+  // action as rootAction,
+  // loader: rootLoader,
+  // action: rootAction,
+
+
 export async function loader({ request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
@@ -24,7 +30,7 @@ export async function action() {
   return redirect(`/contacts/${contact.id}/edit`);
 }
 
-export default function Root() {
+export default function RootExample() {
   // @ts-ignore
   const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
@@ -113,31 +119,3 @@ export default function Root() {
     </>
   );
 }
-
-/* <Layout className="layout">
-<Header>
-  <div className="logo" />
-  <Menu
-    theme="dark"
-    mode="horizontal"
-    defaultSelectedKeys={['2']}
-    style={{ lineHeight: '64px' }}
-  >
-    <Menu.Item key="1">nav 1</Menu.Item>
-    <Menu.Item key="2">nav 2</Menu.Item>
-    <Menu.Item key="3">nav 3</Menu.Item>
-  </Menu>
-</Header>
-<Content style={{ padding: '0 50px' }}>
-  <Breadcrumb style={{ margin: '16px 0' }}>
-    <Breadcrumb.Item>Home</Breadcrumb.Item>
-    <Breadcrumb.Item>List</Breadcrumb.Item>
-    <Breadcrumb.Item>App</Breadcrumb.Item>
-  </Breadcrumb>
-  <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
-</Content>
-<Footer style={{ textAlign: 'center' }}>
-  Ant Design ©2018 Created by Ant UED
-</Footer>
-</Layout>,
-mountNode */
