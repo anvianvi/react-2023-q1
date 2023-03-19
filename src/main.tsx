@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./pages/root/root";
 import About from "./pages/about/about";
 import ErrorPage from "./pages/error-page/error-page";
-import Main from "./pages/main/main";
+import Main from "./pages/main-page/main";
 
 const router = createBrowserRouter([
   {
@@ -19,14 +19,12 @@ const router = createBrowserRouter([
       {
         path: "main",
         element: <Main />,
-        // loader: contactLoader,
-        // action: contactAction,
+        // loader: mainLoader,
+        // action: mainAction,
       },
       {
         path: "about",
         element: <About />,
-        // loader: contactLoader,
-        // action: editAction,
       },
     ],
   },

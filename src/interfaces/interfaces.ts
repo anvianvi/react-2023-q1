@@ -4,13 +4,15 @@ export interface RouteError {
   message?: string;
 }
 
-export interface ContactProps {
-  contact: {
-    first: string;
-    last: string;
-    avatar: string;
-    twitter?: string;
-    notes?: string;
-    favorite: boolean;
-  }
+export interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }
