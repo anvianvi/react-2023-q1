@@ -1,6 +1,6 @@
-import { Header } from "antd/es/layout/layout";
-import { NavLink } from "react-router-dom";
-import "./style.sass";
+import { Header } from 'antd/es/layout/layout';
+import { NavLink } from 'react-router-dom';
+import './style.sass';
 
 export default function MyHeader() {
   return (

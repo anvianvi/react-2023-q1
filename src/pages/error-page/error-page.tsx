@@ -1,7 +1,7 @@
-import "./style.sass";
-import { useEffect, useState } from "react";
-import { useNavigate, useRouteError } from "react-router-dom";
-import { RouteError } from "../../interfaces/interfaces";
+import './style.sass';
+import { useEffect, useState } from 'react';
+import { useNavigate, useRouteError } from 'react-router-dom';
+import { RouteError } from '../../interfaces/interfaces';
 
 export default function ErrorPage() {
   const error = useRouteError() as RouteError;
@@ -20,11 +20,7 @@ export default function ErrorPage() {
   );
 }
 
-export function CountdownAndRedirectToHome({
-  initialCount,
-}: {
-  initialCount: number;
-}) {
+export function CountdownAndRedirectToHome({ initialCount }: { initialCount: number }) {
   const [count, setCount] = useState(initialCount);
   const navigate = useNavigate();
 
@@ -35,7 +31,7 @@ export function CountdownAndRedirectToHome({
 
     if (count === 0) {
       clearInterval(interval);
-      navigate("/");
+      navigate(`/`);
     }
 
     return () => clearInterval(interval);

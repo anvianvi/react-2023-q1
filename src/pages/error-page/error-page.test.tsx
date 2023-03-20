@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react';
-import ErrorPage, { CountdownAndRedirectToHome } from "./error-page";
+import ErrorPage, { CountdownAndRedirectToHome } from './error-page';
 import { useNavigate, useRouteError } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
@@ -8,7 +8,11 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('ErrorPage', () => {
-  const errorMock = { status: '500', statusText: 'Internal Server Error', message: 'Something went wrong' };
+  const errorMock = {
+    status: '500',
+    statusText: 'Internal Server Error',
+    message: 'Something went wrong',
+  };
   const navigateMock = jest.fn();
 
   beforeEach(() => {
@@ -24,13 +28,17 @@ describe('ErrorPage', () => {
     render(<ErrorPage />);
     expect(screen.getByText(/Oops!/i)).toBeInTheDocument();
     expect(screen.getByText(/Sorry, an unexpected error has occurred./i)).toBeInTheDocument();
-    expect(screen.getByText(/You will be redirected to home route in 3 seconds./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You will be redirected to home route in 3 seconds./i)
+    ).toBeInTheDocument();
     expect(screen.getByText(`${errorMock.status} ${errorMock.statusText}`)).toBeInTheDocument();
   });
 
   it('redirects to home page after the countdown ends', async () => {
     render(<ErrorPage />);
-    expect(screen.getByText(/You will be redirected to home route in 3 seconds./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You will be redirected to home route in 3 seconds./i)
+    ).toBeInTheDocument();
     act(() => {
       jest.advanceTimersByTime(3000);
     });
@@ -59,20 +67,28 @@ describe('Countdown', () => {
 
   it('renders the countdown with the initial count', () => {
     render(<CountdownAndRedirectToHome initialCount={3} />);
-    expect(screen.getByText(/You will be redirected to home route in 3 seconds./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You will be redirected to home route in 3 seconds./i)
+    ).toBeInTheDocument();
   });
 
   it('updates the count every second', () => {
-    render(<CountdownAndRedirectToHome initialCount ={3}  />);
-    expect(screen.getByText(/You will be redirected to home route in 3 seconds./i)).toBeInTheDocument();
+    render(<CountdownAndRedirectToHome initialCount={3} />);
+    expect(
+      screen.getByText(/You will be redirected to home route in 3 seconds./i)
+    ).toBeInTheDocument();
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(screen.getByText(/You will be redirected to home route in 2 seconds./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You will be redirected to home route in 2 seconds./i)
+    ).toBeInTheDocument();
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(screen.getByText(/You will be redirected to home route in 1 second./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You will be redirected to home route in 1 second./i)
+    ).toBeInTheDocument();
   });
 
   it('stops the countdown and redirects to home page when the count reaches 0', () => {

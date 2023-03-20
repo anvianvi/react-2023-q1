@@ -1,4 +1,4 @@
-import "./style.sass";
+import './style.sass';
 
 export default function About() {
   return (
