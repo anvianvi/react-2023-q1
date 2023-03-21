@@ -1,15 +1,14 @@
 import './style.sass';
 
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import Root from './pages/root/root';
 import About from './pages/about/about';
 import ErrorPage from './pages/error-page/error-page';
 import Main from './pages/main-page/main-page';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: `/`,
     element: <Root />,
@@ -30,8 +29,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router} />);

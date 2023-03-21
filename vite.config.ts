@@ -5,7 +5,7 @@ import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/react-2023-q1',
+  base: './',
   plugins: [react(), eslint()],
   test: {
     globals: true,
