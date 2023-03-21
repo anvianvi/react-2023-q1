@@ -18,6 +18,5 @@ export interface IProduct {
 }
 
 export interface IProducts {
-  [x: string]: any;
   data: IProduct[];
 }
