@@ -4,7 +4,7 @@ import './style.sass';
 
 export default function MyHeader() {
   return (
-    <Header className="header">
+    <Header className="header" data-testid="header">
       <NavLink to={`/`} className="logo"></NavLink>
       <nav className="nav-panel">
         <NavLink to={`/about`}>About</NavLink>
