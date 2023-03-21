@@ -1,11 +1,11 @@
-import { Product } from '../../interfaces/interfaces';
+import { IProduct } from '../../interfaces/interfaces';
 import './style.sass';
 
-export default function ProductCard({ products }: { products: Product[] }) {
+export default function ProductCard({ products }: { products: IProduct[] }) {
   return (
     <div className="products-wapper">
-      {products.map((product: Product) => (
-        <div className="card" key={product.id}>
+      {products.map((product: IProduct) => (
+        <div className="card" key={product.id} data-testid="product-card">
           <img className="card-img" src={product.image} alt={product.title} />
           <div className="card-body">
             <h2 className="card-title">{product.title}</h2>

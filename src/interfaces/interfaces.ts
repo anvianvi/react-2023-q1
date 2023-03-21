@@ -4,7 +4,7 @@ export interface RouteError {
   message?: string;
 }
 
-export interface Product {
+export interface IProduct {
   id: number;
   title: string;
   price: number;
@@ -15,4 +15,9 @@ export interface Product {
     rate: number;
     count: number;
   };
+}
+
+export interface IProducts {
+  [x: string]: any;
+  data: IProduct[];
 }

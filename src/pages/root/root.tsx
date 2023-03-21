@@ -8,9 +8,9 @@ import MyHeader from '../../components/header/header';
 export default function Root() {
   return (
     <Layout className="layout">
-      <MyHeader />
+      <MyHeader data-testid="header" />
       <Content style={{ padding: '0 50px' }}>
-        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }} data-testid="outlet">
           <Outlet />
         </div>
       </Content>

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    // "useDefineForClassFields": true,
+    "useDefineForClassFields": true,
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -12,20 +12,22 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./src",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": "./src",
+    "jsx": "react-jsx"
   },
   "include": [
-    "./src/**/*",
-    "styled.d.ts"
+    "src",
+    ".eslintrc",
+    "vite.config.ts",
+    "Globals.d.ts"
   ],
   "references": [
     {

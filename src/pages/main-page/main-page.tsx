@@ -1,17 +1,14 @@
 import { Input } from 'antd';
-import Search from 'antd/es/input/Search';
 import { useState } from 'react';
 import ProductCard from '../../components/card/card';
-import { myProducts } from '../../data-example';
+import { myProducts } from '../../assets/data/data-example';
 import './style.sass';
 
 export default function Main() {
   const [searchValue, setSearchValue] = useState('');
-  // let value = '';
-  // let
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    console.log(value); // Log the input value
     setSearchValue(value);
   };
 
@@ -22,7 +19,7 @@ export default function Main() {
       <Input.Search
         placeholder="Search"
         value={searchValue}
-        onSearch={(value) => console.log(value)}
+        onSearch={() => handleSearchChange}
         onChange={handleSearchChange}
       />
       {filteredProducts.length > 0 ? (
