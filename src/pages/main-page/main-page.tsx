@@ -1,5 +1,5 @@
 import { Input } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductCard from '../../components/card/card';
 import { myProducts } from '../../assets/data/data-example';
 import './style.sass';
@@ -7,15 +7,31 @@ import './style.sass';
 export default function Main() {
   const [searchValue, setSearchValue] = useState('');
 
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchValue', searchValue);
+    };
+  }, [searchValue]);
+
+  useEffect(() => {
+    const savedSearchValue = localStorage.getItem('searchValue');
+    if (savedSearchValue) {
+      setSearchValue(savedSearchValue);
+    }
+  }, []);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setSearchValue(value);
   };
 
-  const filteredProducts = myProducts.filter((product) => product.title.includes(searchValue));
+  const filteredProducts = myProducts.filter((product) => {
+    const title = product.title.toLowerCase();
+    return title.includes(searchValue);
+  });
 
   return (
-    <div className="about">
+    <>
       <Input.Search
         placeholder="Search"
         value={searchValue}
@@ -27,6 +43,6 @@ export default function Main() {
       ) : (
         <p>No products found</p>
       )}
-    </div>
+    </>
   );
 }

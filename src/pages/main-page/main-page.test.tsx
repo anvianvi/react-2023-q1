@@ -34,6 +34,6 @@ describe('Main', () => {
     fireEvent.change(searchInput, { target: { value: 'Mens' } });
     fireEvent.click(screen.getByRole('button'));
     const productCards = screen.queryAllByTestId('product-card');
-    expect(productCards.length).toBe(3);
+    expect(productCards.length).toBe(4);
   });
 });
