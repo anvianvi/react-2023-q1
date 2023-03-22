@@ -7,7 +7,22 @@ export default function MyHeader() {
     <Header className="header" data-testid="header">
       <NavLink to={`/`} className="logo"></NavLink>
       <nav className="nav-panel">
-        <NavLink to={`/about`}>About</NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isPending ? 'pending' : isActive ? 'active' : ''
+          }
+          to={`/`}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isPending ? 'pending' : isActive ? 'active' : ''
+          }
+          to={`/about`}
+        >
+          About
+        </NavLink>
       </nav>
     </Header>
   );
