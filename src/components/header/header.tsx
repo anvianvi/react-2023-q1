@@ -23,6 +23,14 @@ export default function MyHeader() {
         >
           About
         </NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isPending ? 'pending' : isActive ? 'active' : ''
+          }
+          to={`/subscribe`}
+        >
+          subscribe
+        </NavLink>
       </nav>
     </Header>
   );
