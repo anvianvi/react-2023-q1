@@ -1,117 +1,169 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import './style.sass';
+import React, { FC, useState } from 'react';
+import { Button, Input, Select, Switch, Table } from 'antd';
 
-import React, { useState } from 'react';
-import { Form, Input, DatePicker, Select, Checkbox, Switch, Upload, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+interface Person {
+  id: number;
+  name: string;
+  surname: string;
+  birthday: string;
+  country: string;
+  gender: string;
+  email: string;
+  promo: boolean;
+}
 
 const { Option } = Select;
 
-const genderOptions = [
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'female' },
-];
+const MyComponent: FC = () => {
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [country, setCountry] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
+  const [promo, setPromo] = useState(false);
+  const [people, setPeople] = useState<Person[]>([]);
 
-const countryOptions = [
-  { label: 'USA', value: 'usa' },
-  { label: 'Canada', value: 'canada' },
-];
+  const handleSubmit = () => {
+    if (!name || !surname || !birthday || !country || !gender || !email) return;
 
-const stateOptions = [
-  { label: 'New York', value: 'ny' },
-  { label: 'California', value: 'ca' },
-];
+    const newPerson = {
+      id: Date.now(),
+      name,
+      surname,
+      birthday,
+      country,
+      gender,
+      email,
+      promo,
+    };
 
-const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    zip: '${label} is not a valid zip code!',
-  },
-};
+    setPeople([...people, newPerson]);
+    setName('');
+    setSurname('');
+    setBirthday('');
+    setCountry('');
+    setGender('');
+    setEmail('');
+    setPromo(false);
+    localStorage.setItem('people', JSON.stringify([...people, newPerson]));
+  };
 
-export default function Subscribe() {
-  const [form] = Form.useForm();
-  const [profilePic, setProfilePic] = useState(null);
+  const handleClearLocalStorage = () => {
+    setPeople([]);
+    localStorage.removeItem('people');
+  };
 
-  const onFileUploadChange = (info: {
-    file: { status: string; originFileObj: React.SetStateAction<null> };
-  }) => {
-    if (info.file.status === 'done') {
-      setProfilePic(info.file.originFileObj);
+  const getPeopleFromLocalStorage = () => {
+    const peopleFromLocalStorage = localStorage.getItem('people');
+    if (peopleFromLocalStorage) {
+      setPeople(JSON.parse(peopleFromLocalStorage));
     }
   };
 
-  const onFormSubmit = (values: unknown) => {
-    console.log(values);
-  };
+  React.useEffect(() => {
+    getPeopleFromLocalStorage();
+  }, []);
+
+  const columns = [
+    {
+      title: '#',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Surname',
+      dataIndex: 'surname',
+      key: 'surname',
+    },
+    {
+      title: 'Birthday',
+      dataIndex: 'birthday',
+      key: 'birthday',
+    },
+    {
+      title: 'Country',
+      dataIndex: 'country',
+      key: 'country',
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Promo',
+      dataIndex: 'promo',
+      key: 'promo',
+      render: (promo: boolean) => (promo ? 'Yes' : 'No'),
+    },
+  ];
 
   return (
-    <Form
-      form={form}
-      labelCol={{ span: 6 }}
-      wrapperCol={{ span: 12 }}
-      onFinish={onFormSubmit}
-      // validateMessages={validateMessages}
-    >
-      <Form.Item name="firstName" label="First Name" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="lastName" label="Last Name">
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="zipCode" label="Zip Code" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="birthday" label="Birthday">
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item name="deliveryDate" label="Delivery Date">
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item name="country" label="Country">
-        <Select>
-          {countryOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
+    <div>
+      <div>
+        <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div>
+        <Input placeholder="Surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
+      </div>
+      <div>
+        <Input
+          placeholder="Birthday"
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+        />
+      </div>
+      <div>
+        <Select
+          placeholder="Country"
+          value={country}
+          onChange={(value: string) => setCountry(value)}
+        >
+          <Option value="USA">USA</Option>
+          <Option value="Canada">Canada</Option>
+          <Option value="Mexico">Mexico</Option>
         </Select>
-      </Form.Item>
-
-      <Form.Item name="state" label="State">
-        <Select>
-          {stateOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item name="consent" label="Consent" valuePropName="checked">
-        <Checkbox>I consent to my personal data being collected and processed.</Checkbox>
-      </Form.Item>
-
-      <Form.Item name="gifts" label="Gifts">
-        <Checkbox.Group>
-          <Checkbox value="chocolate">Chocolate</Checkbox>
-          <Checkbox value="flowers">Flowers</Checkbox>
-          <Checkbox value="giftCard">Gift Card</Checkbox>
-        </Checkbox.Group>
-      </Form.Item>
-
-      <Form.Item name="gender" label="Gender">
-        <Checkbox.Group options={genderOptions} />
-      </Form.Item>
-
-      <Form.Item name="notifications" label="Notifications" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-    </Form>
+      </div>
+      <div>
+        <Switch
+          checkedChildren="Male"
+          unCheckedChildren="Female"
+          checked={gender === 'male'}
+          onChange={(value: boolean) => setGender(value ? 'male' : 'female')}
+        />
+      </div>
+      <div>
+        <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      </div>
+      <div>
+        <Switch
+          checkedChildren="Yes"
+          unCheckedChildren="No"
+          checked={promo}
+          onChange={(value: boolean) => setPromo(value)}
+        />
+        <span style={{ marginLeft: 10 }}>
+          {promo
+            ? 'I want to receive notifications about promo'
+            : 'I don’t want to receive notifications about promo'}
+        </span>
+      </div>
+      <Button onClick={handleSubmit}>Submit</Button>
+      <Button onClick={handleClearLocalStorage}>Clear Local Storage</Button>
+      <Table dataSource={people} columns={columns} />
+    </div>
   );
-}
+};
+
+export default MyComponent;
