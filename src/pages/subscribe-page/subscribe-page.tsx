@@ -1,169 +1,145 @@
-import React, { FC, useState } from 'react';
-import { Button, Input, Select, Switch, Table } from 'antd';
+import { Form, Input, Radio, Select, Button, Table } from 'antd';
+import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
+import { Person } from './intarface';
 
-interface Person {
-  id: number;
-  name: string;
-  surname: string;
-  birthday: string;
-  country: string;
-  gender: string;
-  email: string;
-  promo: boolean;
-}
+const durationOptions = [
+  { label: '<1:30', value: 'lessThan1:30' },
+  { label: '1:30-2:00', value: '1:30to2:00' },
+  { label: '>2:00', value: 'moreThan2:00' },
+];
+const PersonForm = () => {
+  const [persons, setPersons] = useState<Person[]>([]);
+  const [currentId, setCurrentId] = useState(1);
 
-const { Option } = Select;
+  const { control, handleSubmit, formState } = useForm<Person>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
-const MyComponent: FC = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [country, setCountry] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [promo, setPromo] = useState(false);
-  const [people, setPeople] = useState<Person[]>([]);
-
-  const handleSubmit = () => {
-    if (!name || !surname || !birthday || !country || !gender || !email) return;
-
-    const newPerson = {
-      id: Date.now(),
-      name,
-      surname,
-      birthday,
-      country,
-      gender,
-      email,
-      promo,
-    };
-
-    setPeople([...people, newPerson]);
-    setName('');
-    setSurname('');
-    setBirthday('');
-    setCountry('');
-    setGender('');
-    setEmail('');
-    setPromo(false);
-    localStorage.setItem('people', JSON.stringify([...people, newPerson]));
+  const onSubmit = (data: Person) => {
+    const newPerson = { ...data, id: currentId };
+    setPersons([...persons, newPerson]);
+    setCurrentId(currentId + 1);
+    localStorage.setItem('persons', JSON.stringify([...persons, newPerson]));
   };
 
-  const handleClearLocalStorage = () => {
-    setPeople([]);
-    localStorage.removeItem('people');
+  const clearLocalStorage = () => {
+    setPersons([]);
+    setCurrentId(1);
+    localStorage.removeItem('persons');
   };
-
-  const getPeopleFromLocalStorage = () => {
-    const peopleFromLocalStorage = localStorage.getItem('people');
-    if (peopleFromLocalStorage) {
-      setPeople(JSON.parse(peopleFromLocalStorage));
-    }
-  };
-
-  React.useEffect(() => {
-    getPeopleFromLocalStorage();
-  }, []);
 
   const columns = [
-    {
-      title: '#',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Surname',
-      dataIndex: 'surname',
-      key: 'surname',
-    },
-    {
-      title: 'Birthday',
-      dataIndex: 'birthday',
-      key: 'birthday',
-    },
-    {
-      title: 'Country',
-      dataIndex: 'country',
-      key: 'country',
-    },
-    {
-      title: 'Gender',
-      dataIndex: 'gender',
-      key: 'gender',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Promo',
-      dataIndex: 'promo',
-      key: 'promo',
-      render: (promo: boolean) => (promo ? 'Yes' : 'No'),
-    },
+    { title: 'ID', dataIndex: 'id', key: 'id' },
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Surname', dataIndex: 'surname', key: 'surname' },
+    { title: 'Birthdate', dataIndex: 'birthdate', key: 'birthdate' },
+    { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    { title: 'Duration', dataIndex: 'duration', key: 'duration' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
   ];
 
   return (
-    <div>
-      <div>
-        <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      </div>
-      <div>
-        <Input placeholder="Surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
-      </div>
-      <div>
-        <Input
-          placeholder="Birthday"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-        />
-      </div>
-      <div>
-        <Select
-          placeholder="Country"
-          value={country}
-          onChange={(value: string) => setCountry(value)}
+    <>
+      <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+        <Form.Item
+          label="Name"
+          validateStatus={formState.errors.name ? 'error' : ''}
+          help={formState.errors.name?.message}
         >
-          <Option value="USA">USA</Option>
-          <Option value="Canada">Canada</Option>
-          <Option value="Mexico">Mexico</Option>
-        </Select>
-      </div>
-      <div>
-        <Switch
-          checkedChildren="Male"
-          unCheckedChildren="Female"
-          checked={gender === 'male'}
-          onChange={(value: boolean) => setGender(value ? 'male' : 'female')}
-        />
-      </div>
-      <div>
-        <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div>
-        <Switch
-          checkedChildren="Yes"
-          unCheckedChildren="No"
-          checked={promo}
-          onChange={(value: boolean) => setPromo(value)}
-        />
-        <span style={{ marginLeft: 10 }}>
-          {promo
-            ? 'I want to receive notifications about promo'
-            : 'I don’t want to receive notifications about promo'}
-        </span>
-      </div>
-      <Button onClick={handleSubmit}>Submit</Button>
-      <Button onClick={handleClearLocalStorage}>Clear Local Storage</Button>
-      <Table dataSource={people} columns={columns} />
-    </div>
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Name is required' }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Surname"
+          validateStatus={formState.errors.surname ? 'error' : ''}
+          help={formState.errors.surname?.message}
+        >
+          <Controller
+            name="surname"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Surname is required' }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Birthdate"
+          validateStatus={formState.errors.birthdate ? 'error' : ''}
+          help={formState.errors.birthdate?.message}
+        >
+          <Controller
+            name="birthdate"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Birthdate is required' }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Gender"
+          validateStatus={formState.errors.gender ? 'error' : ''}
+          help={formState.errors.gender?.message}
+        >
+          <Controller
+            name="gender"
+            control={control}
+            defaultValue="male"
+            rules={{ required: 'Gender is required' }}
+            render={({ field }) => (
+              <Radio.Group {...field}>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
+              </Radio.Group>
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Duration"
+          validateStatus={formState.errors.duration ? 'error' : ''}
+          help={formState.errors.duration?.message}
+        >
+          <Controller
+            name="duration"
+            control={control}
+            defaultValue="moreThan2:00"
+            rules={{ required: 'Duration is required' }}
+            render={({ field }) => <Select options={durationOptions} {...field} />}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Email"
+          validateStatus={formState.errors.email ? 'error' : ''}
+          help={formState.errors.email?.message}
+        >
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Email is required', pattern: /^\S+@\S+$/i }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" disabled={!formState.isValid}>
+            Submit
+          </Button>
+          <Button type="default" onClick={clearLocalStorage} style={{ marginLeft: '10px' }}>
+            Clear
+          </Button>
+        </Form.Item>
+      </Form>
+      {persons.length > 0 && (
+        <Table dataSource={persons} columns={columns} pagination={false} rowKey="id" key="table" />
+      )}
+    </>
   );
 };
-
-export default MyComponent;
+export default PersonForm;
