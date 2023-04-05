@@ -1,7 +1,7 @@
 import { Form, Input, Radio, Select, Button, Table } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { Person } from './intarface';
+import { Person } from 'interfaces/interfaces';
 
 const durationOptions = [
   { label: '<1:30', value: 'lessThan1:30' },
