@@ -7,7 +7,7 @@ import Root from './pages/root/root';
 import About from './pages/about/about';
 import ErrorPage from './pages/error-page/error-page';
 import Main from './pages/main-page/main-page';
-import Subscribe from './pages/subscribe-page/subscribe-page';
+import PersonForm from './pages/person-form/person-form';
 
 const router = createHashRouter([
   {
@@ -28,7 +28,7 @@ const router = createHashRouter([
       },
       {
         path: `subscribe`,
-        element: <Subscribe />,
+        element: <PersonForm />,
       },
     ],
   },
