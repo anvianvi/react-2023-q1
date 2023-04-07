@@ -1,7 +1,7 @@
 import './style.sass';
 import { useEffect, useState } from 'react';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import { RouteError } from '../../interfaces/interfaces';
+import { RouteError } from '../../interfaces';
 
 export default function ErrorPage() {
   const error = useRouteError() as RouteError;

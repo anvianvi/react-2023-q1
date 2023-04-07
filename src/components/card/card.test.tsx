@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import ProductCard from './card';
-import { IProduct } from '../../interfaces/interfaces';
+import { IProduct } from '../../interfaces';
 
 const mockData: IProduct = {
   id: 1,

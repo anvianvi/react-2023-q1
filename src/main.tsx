@@ -8,6 +8,7 @@ import About from './pages/about/about';
 import ErrorPage from './pages/error-page/error-page';
 import Main from './pages/main-page/main-page';
 import PersonForm from './pages/person-form/person-form';
+import ApiPage from './pages/api-page/api-page';
 
 const router = createHashRouter([
   {
@@ -21,6 +22,10 @@ const router = createHashRouter([
         element: <Main />,
         // loader: mainLoader,
         // action: mainAction,
+      },
+      {
+        path: `apipage`,
+        element: <ApiPage />,
       },
       {
         path: `about`,

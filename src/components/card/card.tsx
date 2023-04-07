@@ -1,4 +1,4 @@
-import { IProduct } from '../../interfaces/interfaces';
+import { IProduct } from '../../interfaces';
 import './style.sass';
 
 export default function ProductCard({ products }: { products: IProduct[] }) {
