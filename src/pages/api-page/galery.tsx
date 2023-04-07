@@ -8,7 +8,7 @@ type CardProps = {
 };
 
 const Card = ({ photo, onClick }: CardProps) => (
-  <div className="card" onClick={onClick}>
+  <div className="card" onClick={onClick} data-testid="card">
     <img className="img" src={photo.urls.regular} alt={photo.alt_description} />
     <div className="credit">
       <a
@@ -40,18 +40,12 @@ const Gallery = ({ photos = [] }: GalleryProps) => {
 
   return (
     <>
-      <div className="gallery">
+      <div className="gallery" data-testid="gallery">
         {photos.map((photo: Photo) => (
           <Card key={photo.id} photo={photo} onClick={() => handleCardClick(photo)} />
         ))}
       </div>
-      <Modal
-        visible={selectedPhoto != null}
-        onCancel={handleCloseModal}
-        footer={null}
-        destroyOnClose
-        centered
-      >
+      <Modal onCancel={handleCloseModal} footer={null} destroyOnClose centered>
         <div className="modal-info">
           <img
             className="modal-img"

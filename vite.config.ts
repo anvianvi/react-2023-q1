@@ -16,9 +16,11 @@ export default defineConfig({
         ...(configDefaults.coverage.exclude || []),
         'src/main.tsx',
         'src/assets',
-        'src/interfaces',
+        'interfaces.ts',
         'src/routes',
         'src/pages/error-page',
+        'src/pages/person-form/person-form.tsx',
+        // src\pages\person-form\person-form.tsx
       ],
       all: true,
       src: ['src'],
