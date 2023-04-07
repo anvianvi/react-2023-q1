@@ -25,7 +25,7 @@ const ApiPage: FC = () => {
   };
 
   return (
-    <div>
+    <div data-testid="api-page">
       <form onSubmit={handleSearchSubmit}>
         <Row justify="center" gutter={[8, 8]}>
           <Col span={18}>

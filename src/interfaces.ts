@@ -39,13 +39,13 @@ export type Photo = {
   urls: { full: string; large: string; regular: string; raw: string; small: string };
   color: string | null;
   user: {
-    first_name: string;
-    last_name: string;
-    bio: string;
-    total_photos: number;
-    username: string;
-    name: string;
-    portfolio_url: string;
+    first_name?: string;
+    last_name?: string;
+    bio?: string;
+    total_photos?: number;
+    username?: string;
+    name?: string;
+    portfolio_url?: string;
   };
 };
 
