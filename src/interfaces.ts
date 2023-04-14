@@ -30,3 +30,28 @@ export interface Person {
   duration: 'lessThan1:30' | '1:30to2:00' | 'moreThan2:00';
   email: string;
 }
+
+export type Photo = {
+  id: number;
+  alt_description: string;
+  width: number;
+  height: number;
+  urls: { full: string; large: string; regular: string; raw: string; small: string };
+  color: string | null;
+  user: {
+    first_name?: string;
+    last_name?: string;
+    bio?: string;
+    total_photos?: number;
+    username?: string;
+    name?: string;
+    portfolio_url?: string;
+  };
+};
+
+export interface ApiResponse {
+  response?: {
+    results: Photo[];
+  };
+  errors?: string[];
+}

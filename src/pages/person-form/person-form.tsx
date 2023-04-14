@@ -1,7 +1,7 @@
 import { Form, Input, Radio, Select, Button, Table } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { Person } from 'interfaces/interfaces';
+import { Person } from 'interfaces';
 
 const durationOptions = [
   { label: '<1:30', value: 'lessThan1:30' },
@@ -42,7 +42,7 @@ const PersonForm = () => {
 
   return (
     <>
-      <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+      <Form layout="vertical" onFinish={handleSubmit(onSubmit)} data-testid="myform">
         <Form.Item
           label="Name"
           validateStatus={formState.errors.name ? 'error' : ''}

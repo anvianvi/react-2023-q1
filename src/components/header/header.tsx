@@ -19,6 +19,14 @@ export default function MyHeader() {
           className={({ isActive, isPending }) =>
             isPending ? 'pending' : isActive ? 'active' : ''
           }
+          to={`/apipage`}
+        >
+          ApiTask
+        </NavLink>
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isPending ? 'pending' : isActive ? 'active' : ''
+          }
           to={`/about`}
         >
           About
